@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/onboarding_nav_graph"
+    app:startDestination="@id/baseFragment">
+    <fragment
+        android:id="@+id/onboardingFragmentOne"
+        android:name="com.example.habittracker.OnboardingFragmentOne"
+        android:label="fragment_onboarding_one"
+        tools:layout="@layout/fragment_onboarding_one" >
+        <action
+            android:id="@+id/action_onboardingFragmentOne_to_onboardingFragmentTwo"
+            app:destination="@id/onboardingFragmentTwo" />
+    </fragment>
+    <fragment
+        android:id="@+id/onboardingFragmentTwo"
+        android:name="com.example.habittracker.OnboardingFragmentTwo"
+        android:label="fragment_onboarding_two"
+        tools:layout="@layout/fragment_onboarding_two" >
+        <action
+            android:id="@+id/action_onboardingFragmentTwo_to_onboardingFragmentThree"
+            app:destination="@id/onboardingFragmentThree" />
+    </fragment>
+    <fragment
+        android:id="@+id/onboardingFragmentThree"
+        android:name="com.example.habittracker.OnboardingFragmentThree"
+        android:label="fragment_onboarding_three"
+        tools:layout="@layout/fragment_onboarding_three" />
+    <fragment
+        android:id="@+id/baseFragment"
+        android:name="com.example.habittracker.BaseFragment"
+        android:label="fragment_base"
+        tools:layout="@layout/fragment_base" >
+        <action
+            android:id="@+id/action_baseFragment2_to_onboardingFragmentOne"
+            app:destination="@id/onboardingFragmentOne" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.habittracker.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+</navigation>

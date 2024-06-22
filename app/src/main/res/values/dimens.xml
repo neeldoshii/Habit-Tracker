@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Margin/Padding Start 16dp/-->
+    <dimen name="dimenStart16">16dp</dimen>
+
+    <!--Margin/Padding Top 16dp/-->
+    <dimen name="dimenTop16">16dp</dimen>
+
+    <!--Margin/Padding Bottom 16dp/-->
+    <dimen name="dimenBottom16">16dp</dimen>
+
+    <!--Margin/Padding End 16dp/-->
+    <dimen name="dimenEnd16">16dp</dimen>
+</resources>

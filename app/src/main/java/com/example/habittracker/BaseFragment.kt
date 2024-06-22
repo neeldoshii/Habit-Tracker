@@ -1,10 +1,12 @@
 package com.example.habittracker
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,8 +35,52 @@ class BaseFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
+        /**
+         * Handles the redirection based on the user's current status.
+         *
+         * There are three possible scenarios:
+         *
+         * 1. The user has already logged in or skipped login (as a guest).
+         *    - In this case, the user will be redirected to the main screen.
+         *
+         * 2. The user has not seen the onboarding screen.
+         *    - In this case, the user will be redirected to the onboarding screen.
+         *
+         * 3. The user has seen the onboarding screen once but has not logged in.
+         *    - In this case, the user will be prompted to log in.
+         */
+
+        if (alreadyLoggedIn()){
+            // TODO("Not yet implemented")
+        }
+        else if (!hasSeenOnboardingScreen()){
+            findNavController().navigate(R.id.action_baseFragment2_to_onboardingFragmentOne)
+        }
+        else {
+            findNavController().navigate(R.id.action_baseFragment_to_loginFragment)
+        }
         return inflater.inflate(R.layout.fragment_base, container, false)
+    }
+
+    /**
+     * Checks if the user has seen the onboarding screen.
+     *
+     * This function retrieves a value from the shared preferences to determine
+     * whether the user has already seen the onboarding screen. If the value is not
+     * present, it defaults to `false`.
+     *
+     * @return `true` if the user has seen the onboarding screen, `false` otherwise.
+     */
+    private fun hasSeenOnboardingScreen(): Boolean {
+        val sharedPreferences = activity?.getSharedPreferences(getString(R.string.onboardingsharedpreference), Context.MODE_PRIVATE)
+        return sharedPreferences?.getBoolean("onboarded", false) ?: false
+    }
+
+    private fun alreadyLoggedIn() : Boolean {
+        // TODO("Not yet implemented")
+        return false
+
     }
 
     companion object {

@@ -1,6 +1,6 @@
 [versions]
-agp = "8.4.1"
-kotlin = "1.9.0"
+agp = "8.5.0"
+kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -13,6 +13,11 @@ navigationFragmentKtx = "2.7.7"
 navigationUiKtx = "2.7.7"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.0.0"
+play-services-auth = "21.2.0"
+googleid = "1.1.0"
+credentials = "1.2.2"
+credentials-play-services-auth = "1.2.2"
+timber = "5.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -26,6 +31,11 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "play-services-auth" }
+googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
+credentials = { group = "androidx.credentials", name = "credentials", version.ref = "credentials"}
+credentials-play-services-auth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials-play-services-auth"}
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -4,56 +4,103 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.example.habittracker.databinding.FragmentLoginBinding
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.security.MessageDigest
+import java.util.UUID
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LoginFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LoginFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var firebaseAuth: FirebaseAuth
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+    ): View {
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+        val rawNonce = UUID.randomUUID().toString()
+        val bytes = rawNonce.toByteArray()
+        val md = MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(bytes)
+        val hashedNonce = digest.fold("") { str, it -> str + "%02x".format(it) }
+
+        // TODO(Dependency INJECT)
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        val credentialManager = CredentialManager.create(requireActivity())
+
+        binding.btnGoogle.setOnClickListener {
+            // Docs Ref : https://developer.android.com/identity/sign-in/credential-manager-siwg
+            val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+                .setFilterByAuthorizedAccounts(false)
+                .setServerClientId(BuildConfig.WEB_CLIENT_ID)
+                .setNonce(hashedNonce)
+                .build()
+
+            // Ref : for Firebase Google Auth Integration
+            // https://firebase.google.com/docs/auth/android/google-signin
+            // TODO Call this in a switch case func to handle (email, anonymous login, google auth)
+            // TODO Extract it into VIEWMODEL MVVM Logic
+            try {
+                val request : GetCredentialRequest = GetCredentialRequest.Builder()
+                    .addCredentialOption(googleIdOption)
+                    .build()
+
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val result = credentialManager.getCredential(
+                        request = request,
+                        context = requireActivity()
+                    )
+                    val credentials = result.credential
+
+                    val googleIdToken = GoogleIdTokenCredential
+                        .createFrom(credentials.data)
+
+                    val firebaseCredential = GoogleAuthProvider.getCredential(googleIdToken.idToken, null)
+                    firebaseAuth.signInWithCredential(firebaseCredential)
+                        .addOnCompleteListener(requireActivity()){ task->
+                            if (task.isSuccessful){
+                                val user = firebaseAuth.currentUser
+                                //TODO update UI
+                            }
+                            else{
+                                Timber.w(task.exception, "signInWithCredential:failure")
+                                //TODO update UI
+                            }
+                        }
+                }
+
+            }catch (e : Exception){
+                //TODO
+                Timber.tag("Exception").e(e.toString())
+            }
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+        }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
 }

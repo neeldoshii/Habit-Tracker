@@ -4,26 +4,26 @@
         android:id="@+id/dashboard"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="Dashboard"/>
+        android:title="@string/dashboard"/>
     <item
         android:id="@+id/bottom_challenge"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="Challenge"/>
+        android:title="@string/challenge"/>
     <item
         android:id="@+id/bottom_community"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="Community"/>
+        android:title="@string/community"/>
     <item
         android:id="@+id/bottom_statistics"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="Statistics"/>
+        android:title="@string/statistics"/>
     <item
         android:id="@+id/bottom_journal"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="Journal"/>
+        android:title="@string/journal"/>
 
 </menu>

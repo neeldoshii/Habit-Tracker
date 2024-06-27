@@ -3,4 +3,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="onboardingsharedpreference">onboardingSharedPreference</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="challenge">Challenge</string>
+    <string name="community">Community</string>
+    <string name="statistics">Statistics</string>
+    <string name="journal">Journal</string>
 </resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/dashboard"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Dashboard"/>
+    <item
+        android:id="@+id/bottom_challenge"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Challenge"/>
+    <item
+        android:id="@+id/bottom_community"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Community"/>
+    <item
+        android:id="@+id/bottom_statistics"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Statistics"/>
+    <item
+        android:id="@+id/bottom_journal"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Journal"/>
+
+</menu>
